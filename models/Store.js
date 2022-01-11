@@ -8,9 +8,12 @@ const StoreSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide store location"],
   },
-  sum: {
+  product_sum: {
     type: Number,
     default: 0,
   },
+  // products:{
+
+  // }
 });
 module.exports = mongoose.model("Store", StoreSchema);

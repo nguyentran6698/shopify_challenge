@@ -6,8 +6,11 @@ const {
   editProduct,
   removeProduct,
 } = require("../controllers/Product");
-
-router.route("/").get(getAllProducts).post(createdProduct);
+const checkStoreMiddleware = require("../middleware/productStoreCheck");
+router
+  .route("/")
+  .get(getAllProducts)
+  .post([checkStoreMiddleware], createdProduct);
 router.route("/:id").patch(editProduct).delete(removeProduct);
 
 module.exports = router;

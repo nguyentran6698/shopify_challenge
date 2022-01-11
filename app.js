@@ -3,15 +3,16 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 const logger = require("morgan");
+const connectDB = require("./db/connectDB");
 // route
 const ProductRoute = require("./routes/Product");
 const StoreRoute = require("./routes/Store");
 // middleware
 const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/errorHandler");
-const connectDB = require("./db/connectDB");
 
 app.use(express.json());
+app.use(express.static("./public"));
 app.use(logger("dev"));
 
 // route

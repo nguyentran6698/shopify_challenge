@@ -6,32 +6,38 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "Please provide name of the product"],
       trim: true,
     },
-    manufacture: {
+    company: {
       type: String,
       required: [true, "Please provide name of the manufacture"],
-      // can add list of products manufacture in here
       trim: true,
     },
-    product_type: {
-      type: String,
-      required: [true, "Please provide type of the product"],
-    },
-    product_desc: {
+    type: {
       type: String,
     },
-    product_img: {
+    desc: {
       type: String,
-      default: "some default image",
     },
-    store: {
-      type: mongoose.Types.ObjectId,
-      required: [true, "please provide store "],
-    },
+    image: [
+      {
+        type: String,
+        default: "/images/image-not-found.jpg",
+      },
+    ],
     quantity: {
       type: Number,
+      default: 0,
+    },
+    price: {
+      type: Number,
+      required: [true, "please provide the price of the product"],
+    },
+    store: {
+      type: [mongoose.Types.ObjectId],
+      required: [true, "please provide store id"],
+      ref: "Store",
     },
   },
-  { timestamps: { createdAt: "created_Date " } }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Product", ProductSchema);

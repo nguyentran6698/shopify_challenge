@@ -14,10 +14,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nguyentran6698/shopify_challenge/issues"
-  },
-  "homepage": "https://github.com/nguyentran6698/shopify_challenge#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
   },

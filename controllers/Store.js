@@ -1,14 +1,23 @@
+const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
 const Store = require("../models/Store");
 const getAllStores = async (req, res) => {
-  res.status(200).send("get all store");
+  const stores = await Store.find({});
+  res.status(StatusCodes.OK).json({ stores, nbHits: stores.length });
 };
 const createStore = async (req, res) => {
-  res.status(200).send("create store");
+  const { name: store_name, location } = req.body;
+  const store = await Store.create({ store_name, location });
+  res.status(StatusCodes.CREATED).json({ store });
 };
 const getStore = async (req, res) => {
-  res.status(200).send("get  store");
+  const { id: _id } = req.params;
+  if (!_id) {
+    throw new CustomError.BadRequest(`Please provide store ID`);
+  }
+  const store = await Store.findById({ _id });
+  res.status(StatusCodes.Ok).json({ store });
 };
-
 module.exports = {
   getAllStores,
   createStore,
