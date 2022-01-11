@@ -17,7 +17,6 @@ const uploadImage = async (req, res) => {
     throw new CustomError.BadRequest("Please upload the image file");
   }
   const productImage = req.files.image;
-  console.log(productImage);
   const result = await cloudinary.uploader.upload(productImage.tempFilePath, {
     user_filename: true,
     folder: "shopify_challenge",
