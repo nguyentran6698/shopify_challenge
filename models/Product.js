@@ -17,12 +17,10 @@ const ProductSchema = new mongoose.Schema(
     desc: {
       type: String,
     },
-    image: [
-      {
-        type: String,
-        default: "/images/image-not-found.jpg",
-      },
-    ],
+    image: {
+      type: String,
+      default: "/images/image-not-found.jpg",
+    },
     quantity: {
       type: Number,
       default: 0,

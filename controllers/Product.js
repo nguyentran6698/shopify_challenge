@@ -20,11 +20,15 @@ const editProduct = async (req, res) => {
   if (!newProduct) {
     throw new CustomError.NotFound(`Can't find the product with ID ${_id}`);
   }
-  res.status(StatusCodes.OK).json({ product });
+  res.status(StatusCodes.OK).json({ newProduct });
 };
 
 const removeProduct = async (req, res) => {
-  res.status(200).json({ msg: "delete product" });
+  const { id: _id } = req.params;
+  await Product.findByIdAndDelete({ _id });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "Sucess!! The product has been deleted" });
 };
 
 module.exports = {
