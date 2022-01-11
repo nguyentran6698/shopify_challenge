@@ -4,11 +4,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     status: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     message: err.message || "Something went wrong",
   };
-  // begin to handle error
-  // 1. duplicate value from email -- done
-  // 2. id is not valid (failed to cast to ObjectID) ---
-  // 3. Faild to find the job ID;
-  // 4. Failed to provide enough field
   if (err.code === 11000) {
     errorObject["message"] = `Duplicate ${Object.keys(
       err.keyPattern
@@ -26,6 +21,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       .join(". ");
   }
   return res.status(errorObject.status).json({ msg: errorObject.message });
+  // Debug Purpose
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
 };
 module.exports = errorHandlerMiddleware;

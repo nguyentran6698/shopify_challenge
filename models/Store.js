@@ -12,8 +12,5 @@ const StoreSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  // products:{
-
-  // }
 });
 module.exports = mongoose.model("Store", StoreSchema);
