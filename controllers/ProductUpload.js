@@ -2,7 +2,10 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const path = require("path");
 const CustomError = require("../errors");
+const { Product } = require("../models");
 const uploadImage = async (req, res) => {
+  const { productID } = req.query;
+  console.log(productID);
   if (!req.files) {
     throw new CustomError.BadRequest("No file being detected");
   }
@@ -24,7 +27,11 @@ const uploadImage = async (req, res) => {
   const { secure_url: imageUpload } = result;
   const { secure_url: thumbNail } = result.eager[0];
   fs.unlinkSync(productImage.tempFilePath);
-  res.status(200).json({ image: { src: { imageUpload, thumbNail } } });
+  const image = {
+    src: { imageUpload, thumbNail },
+  };
+  await Product.findByIdAndUpdate({ _id: productID }, { image });
+  res.status(200).json({ image });
 };
 
 module.exports = uploadImage;

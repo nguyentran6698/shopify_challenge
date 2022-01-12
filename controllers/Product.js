@@ -11,12 +11,14 @@ const createdProduct = async (req, res) => {
     ...req.body,
     store: req.storeList,
   });
+  const product = await Object.assign(newProduct, { store: [] });
+  console.log(product);
   const newID = req.storeList.map((store) => store._id);
   await Store.updateMany(
     { _id: { $in: newID } },
     { $push: { product: newProduct } }
   );
-  res.status(StatusCodes.CREATED).json({ product: newProduct });
+  res.status(StatusCodes.CREATED).json({ product });
 };
 const editProduct = async (req, res) => {
   const { id: _id } = req.params;
@@ -32,15 +34,17 @@ const editProduct = async (req, res) => {
 const removeProduct = async (req, res) => {
   const { id: _id } = req.params;
   const productRemove = await Product.findOneAndRemove({ _id });
-  console.log(product);
-  const { store } = product;
-  await Store.updateMany(
-    { _id: { $in: store } },
-    { $pull: { product: productRemove } }
-  );
+  if (!productRemove) {
+    throw new CustomError.BadRequest(
+      `Can't find the product with the ID ${_id}`
+    );
+  }
+  console.log(productRemove);
+  const { store } = productRemove;
+  await Store.updateMany({ _id: { $in: store } }, { $pull: { product: _id } });
   res
     .status(StatusCodes.OK)
-    .json({ msg: "Sucess!! The product has been deleted", product });
+    .json({ msg: "Sucess!! The product has been deleted" });
 };
 
 module.exports = {

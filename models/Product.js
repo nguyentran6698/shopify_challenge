@@ -19,8 +19,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
     },
     image: {
-      type: String,
-      default: "/images/image-not-found.jpg",
+      type: Object,
     },
     quantity: {
       type: Number,
