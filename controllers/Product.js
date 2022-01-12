@@ -7,17 +7,15 @@ const getAllProducts = async (req, res) => {
   res.status(StatusCodes.OK).json({ products, nbProducts: products.length });
 };
 const createdProduct = async (req, res) => {
-  const { name } = req.body;
-  const product = await Product.findOne({ name });
-  if (product) {
-    throw new CustomError.BadRequest(
-      "Product is already created. Please use edit product instead"
-    );
-  }
   const newProduct = await Product.create({
     ...req.body,
     store: req.storeList,
   });
+  const newID = req.storeList.map((store) => store._id);
+  await Store.updateMany(
+    { _id: { $in: newID } },
+    { $push: { product: newProduct } }
+  );
   res.status(StatusCodes.CREATED).json({ product: newProduct });
 };
 const editProduct = async (req, res) => {
@@ -33,10 +31,16 @@ const editProduct = async (req, res) => {
 };
 const removeProduct = async (req, res) => {
   const { id: _id } = req.params;
-  await Product.findByIdAndDelete({ _id });
+  const productRemove = await Product.findOneAndRemove({ _id });
+  console.log(product);
+  const { store } = product;
+  await Store.updateMany(
+    { _id: { $in: store } },
+    { $pull: { product: productRemove } }
+  );
   res
     .status(StatusCodes.OK)
-    .json({ msg: "Sucess!! The product has been deleted" });
+    .json({ msg: "Sucess!! The product has been deleted", product });
 };
 
 module.exports = {

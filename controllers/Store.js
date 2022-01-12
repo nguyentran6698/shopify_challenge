@@ -15,8 +15,9 @@ const getStore = async (req, res) => {
   if (!_id) {
     throw new CustomError.BadRequest(`Please provide store ID`);
   }
-  const store = await Store.findById({ _id });
-  res.status(StatusCodes.Ok).json({ store });
+
+  const store = await Store.findOne({ _id });
+  res.status(StatusCodes.OK).json({ store });
 };
 module.exports = {
   getAllStores,

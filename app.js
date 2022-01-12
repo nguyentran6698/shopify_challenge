@@ -16,7 +16,6 @@ cloudinary.config({
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
-
 // route
 const ProductRoute = require("./routes/Product");
 const StoreRoute = require("./routes/Store");
@@ -32,7 +31,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.static("./public"));
-app.use(logger("dev"));
+// app.use(logger("dev"));
 app.use(helmet());
 app.use(cors());
 app.use(xss());
@@ -42,7 +41,6 @@ app.use(
     tempFileDir: "/uploads",
   })
 );
-
 // route
 app.use("/api/v1/products", ProductRoute);
 app.use("/api/v1/stores", StoreRoute);

@@ -10,5 +10,11 @@ const StoreSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide store location"],
   },
+  product: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 module.exports = mongoose.model("Store", StoreSchema);

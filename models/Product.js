@@ -5,6 +5,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide name of the product"],
       trim: true,
+      unique: [true, "Product already created. Please, use update instead"],
     },
     company: {
       type: String,
@@ -39,4 +40,13 @@ const ProductSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+ProductSchema.statics.total = async function () {
+  console.log("acb");
+};
+ProductSchema.post("save", async function () {
+  await this.constructor.total();
+});
+ProductSchema.post("update", async function () {
+  await this.constructor.total();
+});
 module.exports = mongoose.model("Product", ProductSchema);
