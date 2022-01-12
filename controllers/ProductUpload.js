@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const CustomError = require("../errors");
 const uploadImage = async (req, res) => {
-  console.log(req.files);
   if (!req.files) {
     throw new CustomError.BadRequest("No file being detected");
   }
@@ -22,7 +21,6 @@ const uploadImage = async (req, res) => {
     folder: "shopify_challenge",
     eager: { width: 200, height: 200, crop: "thumb" },
   });
-  console.log(result);
   const { secure_url: imageUpload } = result;
   const { secure_url: thumbNail } = result.eager[0];
   fs.unlinkSync(productImage.tempFilePath);

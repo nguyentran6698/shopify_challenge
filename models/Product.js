@@ -29,11 +29,13 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: [true, "please provide the price of the product"],
     },
-    store: {
-      type: [mongoose.Types.ObjectId],
-      required: [true, "please provide store id"],
-      ref: "Store",
-    },
+    store: [
+      {
+        type: mongoose.Types.ObjectId,
+        required: [true, "please provide store id"],
+        ref: "Store",
+      },
+    ],
   },
   { timestamps: true }
 );

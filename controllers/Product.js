@@ -7,12 +7,21 @@ const getAllProducts = async (req, res) => {
   res.status(StatusCodes.OK).json({ products, nbProducts: products.length });
 };
 const createdProduct = async (req, res) => {
-  const product = await Product.create({ ...req.body });
-  res.status(StatusCodes.CREATED).json({ product });
+  const { name } = req.body;
+  const product = await Product.findOne({ name });
+  if (product) {
+    throw new CustomError.BadRequest(
+      "Product is already created. Please use edit product instead"
+    );
+  }
+  const newProduct = await Product.create({
+    ...req.body,
+    store: req.storeList,
+  });
+  res.status(StatusCodes.CREATED).json({ product: newProduct });
 };
 const editProduct = async (req, res) => {
   const { id: _id } = req.params;
-  console.log(req.params);
   const newProduct = await Product.findOneAndUpdate({ _id }, req.body, {
     new: true,
     runValidators: true,
@@ -22,7 +31,6 @@ const editProduct = async (req, res) => {
   }
   res.status(StatusCodes.OK).json({ newProduct });
 };
-
 const removeProduct = async (req, res) => {
   const { id: _id } = req.params;
   await Product.findByIdAndDelete({ _id });

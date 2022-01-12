@@ -7,6 +7,7 @@ const productStoreCheck = async (req, res, next) => {
   if (stores.length === 0) {
     throw new CustomError.BadRequest("Please provide store id");
   }
+  req.storeList = stores;
   next();
 };
 module.exports = productStoreCheck;
