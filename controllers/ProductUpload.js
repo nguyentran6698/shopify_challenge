@@ -20,10 +20,13 @@ const uploadImage = async (req, res) => {
   const result = await cloudinary.uploader.upload(productImage.tempFilePath, {
     user_filename: true,
     folder: "shopify_challenge",
+    eager: { width: 200, height: 200, crop: "thumb" },
   });
   console.log(result);
+  const { secure_url: imageUpload } = result;
+  const { secure_url: thumbNail } = result.eager[0];
   fs.unlinkSync(productImage.tempFilePath);
-  res.status(200).json({ image: { src: result.secure_url } });
+  res.status(200).json({ image: { src: { imageUpload, thumbNail } } });
 };
 
 module.exports = uploadImage;
