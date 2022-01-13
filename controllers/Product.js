@@ -12,7 +12,6 @@ const createdProduct = async (req, res) => {
     store: req.storeList,
   });
   const product = await Object.assign(newProduct, { store: [] });
-  console.log(product);
   const newID = req.storeList.map((store) => store._id);
   await Store.updateMany(
     { _id: { $in: newID } },
@@ -39,7 +38,6 @@ const removeProduct = async (req, res) => {
       `Can't find the product with the ID ${_id}`
     );
   }
-  console.log(productRemove);
   const { store } = productRemove;
   await Store.updateMany({ _id: { $in: store } }, { $pull: { product: _id } });
   res
