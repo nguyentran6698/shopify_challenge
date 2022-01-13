@@ -39,13 +39,13 @@ const ProductSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-ProductSchema.statics.total = async function () {
-  console.log("acb");
-};
-ProductSchema.post("save", async function () {
-  await this.constructor.total();
-});
-ProductSchema.post("update", async function () {
-  await this.constructor.total();
-});
+// ProductSchema.statics.total = async function () {
+//   console.log("acb");
+// };
+// ProductSchema.post("save", async function () {
+//   await this.constructor.total();
+// });
+// ProductSchema.post("update", async function () {
+//   await this.constructor.total();
+// });
 module.exports = mongoose.model("Product", ProductSchema);
