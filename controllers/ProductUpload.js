@@ -5,7 +5,6 @@ const CustomError = require("../errors");
 const { Product } = require("../models");
 const uploadImage = async (req, res) => {
   const { productID } = req.query;
-  console.log(productID);
   if (!req.files) {
     throw new CustomError.BadRequest("No file being detected");
   }
@@ -30,7 +29,9 @@ const uploadImage = async (req, res) => {
   const image = {
     src: { imageUpload, thumbNail },
   };
-  await Product.findByIdAndUpdate({ _id: productID }, { image });
+  if (productID) {
+    await Product.findByIdAndUpdate({ _id: productID }, { image });
+  }
   res.status(200).json({ image });
 };
 
