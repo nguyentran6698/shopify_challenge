@@ -11,7 +11,7 @@
 ### Running the application using SwaggerUI.
 
 - Since the product is being deployed on the cloud you can go to the link below to test it.
-  https://shopify-challenge-api-2022.herokuapp.com/api-docs/
+  https://shopify-challenge-project-2022.herokuapp.com/api-docs/
 
 # Testing Process
 
@@ -60,7 +60,7 @@ _Example:_ http://localhost:5000/api/v1/products/upload?productID={id}
 #
 
 _To edit/remove product please pass in the product id in the url_
-_Example:_ https://shopify-challenge-api-2022.herokuapp.com/api/v1/products/{id}
+_Example:_ https://shopify-challenge-project-2022.herokuapp.com/api/v1/products/{id}
 
 ### Step 4: Edit the product.
 
